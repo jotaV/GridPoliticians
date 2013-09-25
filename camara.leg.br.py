@@ -10,6 +10,7 @@ form = webcapture.getAForm("#formDepAtual")
 for option in form.getValues("deputado"):
 
 	form.setParam("deputado", option["value"])
+	nome = option["text"]
 
 	webcapture.acessAdress(form.action, params = form.params)
 	webcapture.creatObject()
@@ -20,7 +21,7 @@ for option in form.getValues("deputado"):
 	webcapture.putData("nome", find)
 
 	task = webcapture.copyData("#content ul li:nth-child(2)")
-	find = re.findall(r".*: (\d*) / (\d*) - .*?: (.*)", task)[0]
+	find = re.findall(r".*: (\d*) / (\d*) - .*?:( (.*)|())", task)[0]
 
 	webcapture.putData("aniversario", "%s/%s" % (find[0], find[1]))
 	webcapture.putData("profissao", find[2])
