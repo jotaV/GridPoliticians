@@ -7,10 +7,9 @@ webcapture.creatList("Deputados")
 
 form = webcapture.getAForm("#formDepAtual")
 
-for option in form.getValues("deputado"):
+for option in form.getValues("deputado")[:3]:
 
 	form.setParam("deputado", option["value"])
-	nome = option["text"]
 
 	webcapture.acessAdress(form.action, params = form.params)
 	webcapture.creatObject()
@@ -24,14 +23,14 @@ for option in form.getValues("deputado"):
 	find = re.findall(r".*: (\d*) / (\d*) - .*?:( (.*)|())", task)[0]
 
 	webcapture.putData("aniversario", "%s/%s" % (find[0], find[1]))
-	webcapture.putData("profissao", find[2])
+	webcapture.putData("profissao", find[3])
 
 	task = webcapture.copyData("#content ul li:nth-child(3)")
 	find = re.findall(r".*: (.*?) / (.*?) / (.*)", task)[0]
 
 	webcapture.putData("partido", find[0])
 	webcapture.putData("UF", find[1])
-	webcapture.putData("diplomação", find[2])
+	webcapture.putData("diplomacao", find[2])
 
 	task = webcapture.copyData("#content ul li:nth-child(4)")
 	find = re.findall(r".*: (\(\d*?\)) ([\d-]*) - Fax: ([\d-]*)", task)[0]
