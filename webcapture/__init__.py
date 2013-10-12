@@ -16,9 +16,9 @@ except ImportError:
 	raise ImportError("Must need install the library requests")
 
 try:
-	import requests
+	import pyquery
 except ImportError:
-	raise ImportError("Must need install the library requests")
+	raise ImportError("Must need install the library pyquery")
 
 from .webcapture import WebCapture
 from .structures import Form

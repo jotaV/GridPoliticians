@@ -60,7 +60,6 @@ class Session(object):
 		"""
 		tags = self.sorceCode.find(selector)
 		text = PQ(tags.html()).text()
-		print text
 		#text = text.encode('ascii', 'xmlcharrefreplace')
 
 		return text
