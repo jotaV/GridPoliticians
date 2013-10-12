@@ -1,3 +1,5 @@
+# -*- coding: latin1 -*-
+
 from xml.etree import ElementTree
 
 class Dict2XML(ElementTree.ElementTree):

@@ -67,7 +67,7 @@ class WebCapture(object):
   			print "ERRO: invalid outfile extension"
   			pass
 
-  		# Getters an Setters
+  	# Getters an Setters
 
 	@property
 	def data(self):
@@ -80,10 +80,10 @@ class WebCapture(object):
 		Creat a list in the last object in the stack of out data
 		:param name: the name of the new list, if the last structure in the stack or the object \
 		passed is a list don't need specify a name
-		:param putin: (optional) an anouther structure to cleat a list inside it.
+		:param putIn: (optional) an anouther structure to cleat a list inside it.
 		"""
 
-  		last = kwargs['putin'] if 'putin' in kwargs else self.__stack[-1]
+  		last = kwargs['putIn'] if 'putIn' in kwargs else self.__stack[-1]
 
 		if isinstance(last, dict):
 			if name == "" :
@@ -104,10 +104,10 @@ class WebCapture(object):
 		Creat a object in the last object in the stack of out data
 		:param name: the name of the new object, if the last structure in the stack or the object \
 		passed is a list don't need specify a name
-		:param putin: (optional) an anouther structure to cleat a object inside it.
+		:param putIn: (optional) an anouther structure to cleat a object inside it.
 		"""
 
-		last = kwargs['putin'] if 'putin' in kwargs else self.__stack[-1]
+		last = kwargs['putIn'] if 'putIn' in kwargs else self.__stack[-1]
 
 		if isinstance(last, dict):
 			if name == "" :
@@ -182,7 +182,7 @@ class WebCapture(object):
 		>>> wb = WebCapture()
 		>>> wb.put('my name', 'jotave')
 		>>> wb.data
-		'{'my name': 'jotave'}'
+		{'my name': 'jotave'}
 		>>> import datetime
 		>>> wb.put('data', datetime.date.today())
 		Traceback (most recent call last):
@@ -222,8 +222,9 @@ class WebCapture(object):
 		>>> form.method
 		'post'
 		>>> form.params
-		'{'login': None, 'password': None}'
+		... # doctest: +ELLIPSIS
+		{'commit': 'Sign in', 'login': '', 'password': '', 'authenticity_token': ...}
 		"""
 		pureForm = self.__session.getAForm(selector)
-		return Form(pureForm)
+		return Form(pureForm, self.__session.currentAdress)
 

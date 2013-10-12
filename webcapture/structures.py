@@ -1,8 +1,10 @@
+# -*- coding: latin1 -*-
 
 """
 Script with the main structures of the module
 """
 
+from urlparse import urljoin
 from xml.etree import ElementTree
 
 class Form(ElementTree.Element):
@@ -25,7 +27,16 @@ class Form(ElementTree.Element):
 	"""
 	validChildren = ("input", "textarea", "select")
 
-	def __init__(self, form):
+	class Option():
+		"""
+		Simple class for define a list of options in the Form
+		"""
+
+		def __init__(self, name, value):
+			self.name = name
+			self.value = value
+
+	def __init__(self, form, url):
 		"""
 		:param form: an :class:ElementTree.Element of a tag form
 		"""
@@ -35,7 +46,7 @@ class Form(ElementTree.Element):
 		self.extend(form)
 
 		if "action" in self.attrib:
-			self.action = self.attrib["action"]
+			self.action = urljoin(url, self.attrib["action"])
 		else:
 			print "Warning: the <form> don't have action attribute"
 
@@ -63,7 +74,7 @@ class Form(ElementTree.Element):
 
 				if name in self.params:
 					if not name in self.options:
-						self.options.update({name : [self.options[name], value]})
+						self.options.update({name : [self.params[name], value]})
 					else:
 						self.options[name].append(value)
 
@@ -75,7 +86,7 @@ class Form(ElementTree.Element):
 					self.select(child, name)
 
 			else:
-				current.checkParams(child)
+				self.checkParams(child)
 
 	def select(self, child, name):
 		"""
@@ -85,14 +96,13 @@ class Form(ElementTree.Element):
 		:param name: the attribute name of the tag
 		"""
 		valueList = []
-		options = child.find("option")
+		options = child.findall("option")
 
-		def map(i, e):
+		def mapOptions(e):
 			if "value" in e.attrib and e.attrib["value"]:
-				valueList.append({"value" : e.attrib["value"],
-								 "text" : e.text})
+				valueList.append(self.Option(e.text, e.attrib["value"]))
 
-		options.map(map)
+		map(mapOptions, options)
 		self.options.update({name : valueList})
 
 	def getValues(self, param):

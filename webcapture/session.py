@@ -1,3 +1,5 @@
+# -*- coding: latin1 -*-
+
 import requests
 
 from urlparse import urlparse
@@ -108,7 +110,7 @@ class Session(object):
 
 		if isinstance(selector, str):
 			tags = self.sorceCode.find(selector)
-			if not tags.is_("form"):
+			if not tags[0].tag == "form":
 				form = tags.find("form")[0]
 			else:
 				form = tags[0]
