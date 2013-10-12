@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<root>
+  <Deputados>
+    <fotolink>http://www.camara.gov.br/internet/deputado/bandep/141463.jpg</fotolink>
+    <fax>(61) 3215-2609</fax>
+    <diplomacao>Titular</diplomacao>
+    <telefone>(61) 3215-5609</telefone>
+    <nome>JOSÉ ABELARDO GUIMARÃES CAMARINHA</nome>
+    <partido>PSB</partido>
+    <legislaturas>07/11</legislaturas>
+    <legislaturas>11/15</legislaturas>
+    <aniversario>22/3</aniversario>
+    <UF>SP</UF>
+    <profissao>Advogado e Professor</profissao>
+  </Deputados>
+  <Deputados>
+    <fotolink>http://www.camara.gov.br/internet/deputado/bandep/73764.jpg</fotolink>
+    <fax>(61) 3215-2515</fax>
+    <diplomacao>Titular</diplomacao>
+    <telefone>(61) 3215-5515</telefone>
+    <nome>ABELARDO LUIZ LUPION MELLO</nome>
+    <partido>DEM</partido>
+    <legislaturas>91/95</legislaturas>
+    <legislaturas>95/99</legislaturas>
+    <legislaturas>99/03</legislaturas>
+    <legislaturas>03/07</legislaturas>
+    <legislaturas>07/11</legislaturas>
+    <legislaturas>11/15</legislaturas>
+    <aniversario>25/8</aniversario>
+    <UF>PR</UF>
+    <profissao>Agropecuarista e Empresário</profissao>
+  </Deputados>
+  <Deputados>
+    <fotolink>http://www.camara.gov.br/internet/deputado/bandep/161907.jpg</fotolink>
+    <fax>(61) 3215-2576</fax>
+    <diplomacao>Suplente</diplomacao>
+    <telefone>(61) 3215-5576</telefone>
+    <nome>ACELINO FREITAS</nome>
+    <partido>PRB</partido>
+    <legislaturas>11/15</legislaturas>
+    <aniversario>21/9</aniversario>
+    <UF>BA</UF>
+    <profissao/>
+  </Deputados>
+</root>

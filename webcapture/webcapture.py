@@ -1,6 +1,7 @@
 # -*- coding: latin1 -*-
 
 import json
+import re
 
 from . import dict2xml
 from .session import Session
@@ -60,8 +61,10 @@ class WebCapture(object):
   			outfile.close()
 
   		elif fileType == "xml":
-  			xml = dict2xml.Dict2XML(self.__data)
-  			xml.write(fileName + ".xml", "UTF-8", True)
+  			xml = dict2xml.Dict2XML(self.__data, self.__session.encoding)
+  			xml.write(fileName + ".xml")
+
+  			#xml.write(fileName + ".xml", "UTF-8", True)
 
   		else:
   			print "ERRO: invalid outfile extension"
@@ -72,6 +75,14 @@ class WebCapture(object):
 	@property
 	def data(self):
 		return self.__data
+
+	@property
+	def site(self):
+		return self.__session.currentSite
+
+	@property
+	def url(self):
+		return self.__session.currentAdress
 
   	# Estructure methods
 
@@ -132,12 +143,14 @@ class WebCapture(object):
 
 	# capture methods
 
-	def capture(self, name, selector, cast = None):
+	def capture(self, name, selector, cast = None, **kwargs):
 		"""
 		Capture and immediately save a data of the current site.
 		:param name: name for the data that will be saved
 		:param selector: an tunerd CSS selector to indentify the location of the data
 		:param cast: (optional) a type to cast the data
+		:param format: (optional) a raw string to identify the structure of the text
+		:param filter: (optional) a raw string or a integer for correction of the data returned
 
 		>>> wb = WebCapture()
 		>>> wb.accessUrl('http://www.worldtimeserver.com/current_time_in_UTC.aspx')
@@ -147,14 +160,15 @@ class WebCapture(object):
 		{'utc time': ...}
 		"""
 
-		self.put(name, self.copy(name, selector, cast))
+		self.put(name, self.copy(selector, cast, **kwargs))
 
-	def copy(self, name, selector, cast = None):
+	def copy(self, selector, cast = None, **kwargs):
 		"""
 		Capture and return a data of the current site.
-		:param name: name for the data that will be saved
 		:param selector: an tunerd CSS selector to indentify the location of the data
 		:param cast: (optional) a type to cast the data
+		:param format: (optional) a raw string to identify the structure of the text
+		:param filter: (optional) a raw string or a integer for correction of the data returned
 
 		>>> wb = WebCapture()
 		>>> wb.accessUrl('http://example.com/')
@@ -170,6 +184,22 @@ class WebCapture(object):
 			except ValueError, e:
 				print "Cast problem data: %s to %s" % (data, cast)
 				print e
+
+		if "format" in kwargs and "filter" in kwargs:
+			_format = kwargs["format"]
+
+			if type(kwargs["filter"]) == int:
+				_filter = "\\" + str(kwargs["filter"])
+			else:
+				_filter = kwargs["filter"]
+
+			_result = re.subn(_format, _filter, data)
+			data = _result[0] if _result[1] >= 1 else ""
+
+			re.purge()
+
+		elif "find" in kwargs:
+			return re.findall(kwargs["find"], data)
 
 		return data
 
@@ -202,13 +232,13 @@ class WebCapture(object):
 
 	#Work with HTML
 
-	def getTagList(self, tag, selector):
+	def getTagList(self, selector, tag):
 		"""
 		Return a list of :class:'SimpleTags' in the selector given
 		:param tag: a tag name
 		:param selector: an tunerd CSS selector to indentify the location of the data
 		"""
-		pureTag = self.__session.getTagList(tag, selector)
+		pureTag = self.__session.getTagList(selector, tag)
 		return pureTag
 
 	def getform(self, selector):

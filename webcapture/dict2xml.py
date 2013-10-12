@@ -1,6 +1,7 @@
 # -*- coding: latin1 -*-
 
 from xml.etree import ElementTree
+from xml.dom import minidom
 
 class Dict2XML(ElementTree.ElementTree):
 	"""
@@ -22,11 +23,12 @@ class Dict2XML(ElementTree.ElementTree):
 	['52', '67', '83']
 	"""
 
-	def __init__(self, xmldict):
+	def __init__(self, xmldict, decoding):
 		rootdict = {'root' : xmldict}
 		roottag = rootdict.keys()[0]
 		root = ElementTree.Element(roottag)
 
+		self.decoding = decoding
 		self._ConvertDictToXmlRecurse(root, rootdict[roottag])
 
 		ElementTree.ElementTree.__init__(self, root)
@@ -38,7 +40,7 @@ class Dict2XML(ElementTree.ElementTree):
 		    for (tag, child) in dictitem.iteritems():
 
 		        if str(tag) == '_text':
-		       	    parent.text = unicode(child)
+		       	    parent.text = unicode(child.decode(self.decoding))#.encode("ascii", "xmlcharrefreplace")
 
 		        elif type(child) is type([]):
 		            # iterate through the array and convert
@@ -54,4 +56,12 @@ class Dict2XML(ElementTree.ElementTree):
 		            self._ConvertDictToXmlRecurse(elem, child)
 
 		else:
-		    parent.text = unicode(dictitem)
+			parent.text = unicode(dictitem.decode(self.decoding))#encode('ascii', 'xmlcharrefreplace')
+
+	def write(self, fileName):
+		outFile = open(fileName, "w")
+
+		rough_string = ElementTree.tostring(self.getroot(), self.decoding)
+		#outFile.write(rough_string)
+		reparsed = minidom.parseString(rough_string)
+		outFile.write(reparsed.toprettyxml(indent = "  ").encode(self.decoding))

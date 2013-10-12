@@ -15,7 +15,7 @@ class Session(object):
 		self.currentAdress = ""
 		self.sorceCode = ""
 
-	def request(self, url, method, kwargs = {}):
+	def request(self, url, method, **kwargs):
 		"""
 		Implement the request function
 
@@ -50,6 +50,8 @@ class Session(object):
 			raise Exception("site return with status code %d" % r.status_code)
 
 		url = urlparse(r.url)
+
+		self.encoding = r.encoding
 		self.currentSite = url.hostname
 		self.currentAdress = url.geturl()
 
@@ -62,7 +64,8 @@ class Session(object):
 		"""
 		tags = self.sorceCode.find(selector)
 		text = PQ(tags.html()).text()
-		#text = text.encode('ascii', 'xmlcharrefreplace')
+		text = text.encode(self.encoding, 'xmlcharrefreplace')
+		#print text
 
 		return text
 
@@ -90,7 +93,6 @@ class Session(object):
 		"""
 
 		tag = self.sorceCode.find(selector)
-
 		if tagName:
 			tag = tag.find(tagName)
 

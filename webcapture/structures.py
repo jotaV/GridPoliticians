@@ -10,6 +10,8 @@ from xml.etree import ElementTree
 class Form(ElementTree.Element):
 	"""
 	Class of an instace of the form tag. Give a simple control of the form
+	A form instace have a list of parameters and a, if possible, a list of options for the parameters.
+	If the parameter is associated with a tag select the possible options will be cataloged objects of type :class:'Option'
 
 	>>> from pyquery import PyQuery as PQ
 	>>> f = PQ('<html><form action="demo_form.asp">' +
@@ -29,7 +31,7 @@ class Form(ElementTree.Element):
 
 	class Option():
 		"""
-		Simple class for define a list of options in the Form
+		Simple class for define a list of options in the :class:Form
 		"""
 
 		def __init__(self, name, value):
