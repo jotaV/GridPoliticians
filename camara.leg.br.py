@@ -1,5 +1,9 @@
 # -*- coding: latin1 -*-
 
+"""
+A script that run a form setting him parameters for get a different page response, then catch some date in the page response
+"""
+
 from webcapture import WebCapture
 
 wb = WebCapture()

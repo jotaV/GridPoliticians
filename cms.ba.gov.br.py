@@ -1,3 +1,11 @@
+# -*- coding: latin1 -*-
+
+"""
+A simple script to get a list of links in a site, in this case 'http://www.cms.ba.gov.br/vereadores.aspx', execute each and get some data in its respective pages
+
+Um script simples para obter uma lista de links em um site, neste caso 'http://www.cms.ba.gov.br/vereadores.aspx', execute cada um e obter alguns dados em suas respectivas páginas
+"""
+
 from webcapture import WebCapture
 
 wb = WebCapture()
