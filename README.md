@@ -14,5 +14,5 @@ Examples
 
 Take a look in the files on main path to see some examples of applications
 
-*cms.ba.gov.br.py
-*camara.leg.br.py
+* cms.ba.gov.br.py
+* camara.leg.br.py
