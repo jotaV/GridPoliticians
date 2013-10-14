@@ -9,7 +9,8 @@ wb.creatList("Deputados")
 
 form = wb.getform("#formDepAtual")
 
-for option in form.getValues("deputado")[:3]:
+for option in form.getValues("deputado"):
+
 	form.setParam("deputado", option.value)
 	wb.accessForm(form)
 
