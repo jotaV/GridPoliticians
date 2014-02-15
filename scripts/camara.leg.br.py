@@ -21,7 +21,7 @@ for option in form.getValues("deputado"):
 	wb.creatObject()
 
 	wb.capture("nome", "#content ul li:nth-child(1)",
-		format = "Nome civil: (.*)", filter = 1)
+		format = r".*: (.*)", filter = 1)
 
 	wb.capture("aniversario", "#content ul li:nth-child(2)",
 		format = r".*: (\d*) / (\d*) .*", filter = "\\1/\\2")
