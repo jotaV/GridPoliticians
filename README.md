@@ -1,4 +1,4 @@
-#Web Campture
+#Web Capture
 
 A simple way to create a spider for web
 
